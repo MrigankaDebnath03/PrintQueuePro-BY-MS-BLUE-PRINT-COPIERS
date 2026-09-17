@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrintQueuePro — Admin Portal | Blue Print Copiers</title>
+  <meta name="description" content="Staff admin portal for PrintQueuePro print order management." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════
+       LOGIN SCREEN
+       ══════════════════════════════════════════════════════ -->
+  <div id="login-screen">
+    <div class="login-card animate-scaleIn">
+
+      <div class="login-logo">
+        <svg width="40" height="40" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Blueprint corner registration mark -->
+          <path d="M2 10V2h8" stroke="#5BAAFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M28 10V2h-8" stroke="#5BAAFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 20v8h8" stroke="#5BAAFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M28 20v8h-8" stroke="#5BAAFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Crosshair center -->
+          <line x1="15" y1="9" x2="15" y2="21" stroke="#5BAAFF" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+          <line x1="9" y1="15" x2="21" y2="15" stroke="#5BAAFF" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+        <div class="login-logo-text">
+          <div class="name">PrintQueuePro</div>
+          <div class="sub">Blue Print Copiers · Staff Portal</div>
+        </div>
+      </div>
+
+      <h2>Welcome back</h2>
+      <p class="subtitle">Sign in to manage print orders</p>
+
+      <form id="login-form" novalidate>
+        <div style="display:flex; flex-direction:column; gap: var(--sp-4);">
+          <div>
+            <label class="login-label" for="admin-password">Admin password</label>
+            <input
+              class="form-input-dark"
+              type="password"
+              id="admin-password"
+              name="password"
+              placeholder="Enter password"
+              autocomplete="current-password"
+              required
+            />
+            <div class="login-error" id="login-error" role="alert">
+              Incorrect password. Please try again.
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg" id="login-btn" style="margin-top: var(--sp-2);">
+            Sign in
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       ADMIN APP  (hidden until logged in)
+       ══════════════════════════════════════════════════════ -->
+  <div id="admin-app" style="display:none;">
+
+    <!-- Top bar -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-left">
+        <span class="admin-brand">PrintQueue<span>Pro</span></span>
+        <div class="live-indicator">
+          <span class="live-dot"></span>
+          <span id="refresh-label">Live</span>
+        </div>
+        <div class="refresh-indicator" id="refresh-indicator">
+          <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+          Refreshing…
+        </div>
+      </div>
+      <div class="admin-topbar-right">
+        <button id="theme-toggle" class="btn btn-ghost" aria-label="Toggle theme"><i class="bi bi-moon-fill"></i></button>
+        <span style="font-size: var(--text-xs); color: var(--grey-600);" id="last-refresh-label">—</span>
+        <button class="admin-logout-btn" id="logout-btn" aria-label="Sign out">Sign out</button>
+      </div>
+    </header>
+
+    <!-- Two-column main -->
+    <div class="admin-main">
+
+      <!-- ── Left: Order list ──────────────────────────── -->
+      <div class="order-list-panel">
+
+        <div class="panel-header">
+          <div class="panel-header-top">
+            <span class="panel-title">Orders <span class="order-count" id="order-count-label"></span></span>
+          </div>
+
+          <!-- Search -->
+          <div class="search-bar">
+            <i class="bi bi-search" aria-hidden="true"></i>
+            <input
+              class="search-input"
+              type="search"
+              id="search-input"
+              placeholder="Search name, phone…"
+              aria-label="Search orders"
+            />
+          </div>
+
+          <!-- Filter chips -->
+          <div class="filter-chips" role="group" aria-label="Filter by status">
+            <button class="filter-chip active" data-filter="all" id="filter-all">All</button>
+            <button class="filter-chip" data-filter="New" id="filter-new">New</button>
+            <button class="filter-chip" data-filter="In Progress" id="filter-progress">In Progress</button>
+            <button class="filter-chip" data-filter="Completed" id="filter-completed">Completed</button>
+          </div>
+        </div>
+
+        <!-- Order list scroll -->
+        <div class="order-list-scroll" id="order-list" role="list" aria-label="Orders">
+          <!-- skeleton placeholders on first load -->
+          <div class="skeleton-card" aria-hidden="true">
+            <div class="skeleton-line wide"></div>
+            <div class="skeleton-line narrow"></div>
+            <div class="skeleton-line short"></div>
+          </div>
+          <div class="skeleton-card" aria-hidden="true">
+            <div class="skeleton-line wide"></div>
+            <div class="skeleton-line narrow"></div>
+            <div class="skeleton-line short"></div>
+          </div>
+          <div class="skeleton-card" aria-hidden="true">
+            <div class="skeleton-line" style="width:55%"></div>
+            <div class="skeleton-line" style="width:35%"></div>
+            <div class="skeleton-line short"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Right: Order detail ───────────────────────── -->
+      <div class="order-detail-panel" id="order-detail-panel">
+
+        <!-- Placeholder -->
+        <div class="detail-placeholder" id="detail-placeholder">
+          <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
+          <h3>Select an order</h3>
+          <p>Click any order on the left to view its details, download files, and update its status.</p>
+        </div>
+
+        <!-- Detail content (hidden until order selected) -->
+        <div id="detail-content" style="display:none; flex-direction:column; flex:1; overflow:hidden;">
+
+          <!-- Header -->
+          <div class="detail-header">
+            <div class="detail-header-left">
+              <div class="detail-token" id="detail-token">Order #—</div>
+              <div class="detail-name" id="detail-name">—</div>
+              <div class="detail-meta-row">
+                <div class="detail-meta-item">
+                  <i class="bi bi-telephone" aria-hidden="true"></i>
+                  <span id="detail-phone">—</span>
+                </div>
+                <div class="detail-meta-item" id="detail-address-row" style="display:none;">
+                  <i class="bi bi-geo-alt" aria-hidden="true"></i>
+                  <span id="detail-address">—</span>
+                </div>
+                <div class="detail-meta-item">
+                  <i class="bi bi-clock" aria-hidden="true"></i>
+                  <span id="detail-time">—</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="status-actions">
+              <span id="detail-badge" class="badge badge-new">New</span>
+              <div class="status-select-group">
+                <select class="status-select" id="status-select" aria-label="Update order status">
+                  <option value="New">New</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+                <button class="btn btn-primary btn-sm" id="update-status-btn">Update</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Body -->
+          <div class="detail-body" id="detail-body">
+
+            <!-- Customer info -->
+            <div class="info-card">
+              <div class="info-card-title">Customer information</div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="info-item-label">Name</span>
+                  <span class="info-item-value" id="info-name">—</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-item-label">Phone</span>
+                  <span class="info-item-value" id="info-phone">—</span>
+                </div>
+                <div class="info-item" id="info-address-row">
+                  <span class="info-item-label">Address</span>
+                  <span class="info-item-value" id="info-address">—</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-item-label">Submitted</span>
+                  <span class="info-item-value" id="info-time">—</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Files -->
+            <div class="files-card">
+              <div class="files-card-header">
+                <span class="files-card-title">Files</span>
+                <span id="files-count-label" style="font-size: var(--text-xs); color: var(--grey-600);"></span>
+              </div>
+              <div id="files-list"></div>
+            </div>
+
+          </div>
+
+          <!-- Footer actions -->
+          <div class="detail-footer">
+            <button class="btn btn-danger btn-sm" id="delete-order-btn" aria-label="Permanently delete this order">
+              <i class="bi bi-trash" aria-hidden="true"></i>
+              Delete Order
+            </button>
+            <div style="flex:1;"></div>
+            <button class="btn btn-secondary btn-sm" id="download-zip-btn">
+              <i class="bi bi-file-earmark-zip" aria-hidden="true"></i>
+              Download all as ZIP
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /.admin-main -->
+  </div><!-- /#admin-app -->
+
+  <!-- Toast container -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

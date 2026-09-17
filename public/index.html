@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrintQueuePro — Place a Print Order | Blue Print Copiers</title>
+  <meta name="description" content="Submit your print or copy order at Blue Print Copiers. Upload your files and set sizes and quantities — your job is queued instantly." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/customer.css" />
+</head>
+<body>
+
+  <!-- ── Top Bar ────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="topbar-logo">
+      <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Blueprint corner registration mark -->
+        <path d="M2 10V2h8" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 10V2h-8" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 20v8h8" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M28 20v8h-8" stroke="var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Crosshair center -->
+        <line x1="15" y1="9" x2="15" y2="21" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        <line x1="9" y1="15" x2="21" y2="15" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+      <div class="topbar-brand">
+        <span class="topbar-name">PrintQueuePro</span>
+        <span class="topbar-tagline">Blue Print Copiers</span>
+      </div>
+    </div>
+    <div style="margin-left: auto;">
+      <button id="theme-toggle" class="btn btn-ghost" aria-label="Toggle theme"><i class="bi bi-moon-fill"></i></button>
+    </div>
+  </header>
+
+  <!-- ── Main ───────────────────────────────────────────── -->
+  <main class="page-main">
+
+    <!-- Page header -->
+    <div class="page-header animate-fadeInUp">
+      <h1>Place your print order</h1>
+      <p>Fill in the form below — staff will prepare your job right away.</p>
+    </div>
+
+    <!-- Error banner -->
+    <div class="error-banner" id="error-banner" role="alert"></div>
+
+    <!-- ── Form view ──────────────────────────────────── -->
+    <div id="form-view">
+      <form id="order-form" novalidate>
+        <div class="form-card stagger">
+
+          <!-- Section 1: Customer details -->
+          <div class="form-section">
+            <div class="form-section-title">1 — Your details</div>
+
+            <div class="form-row" style="margin-bottom: 1.25rem;">
+              <div class="form-group" id="name-group">
+                <label class="form-label" for="name">Full name <span class="required">*</span></label>
+                <input
+                  class="form-input"
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="e.g. Anindya Roy"
+                  autocomplete="name"
+                  required
+                />
+                <span class="form-error" id="name-error">Please enter your name.</span>
+              </div>
+
+              <div class="form-group" id="phone-group">
+                <label class="form-label" for="phone">Phone number <span class="required">*</span></label>
+                <input
+                  class="form-input"
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="e.g. +91 98765 43210"
+                  autocomplete="tel"
+                  required
+                />
+                <span class="form-error" id="phone-error">Please enter a valid phone number.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="address">
+                Address
+                <span style="font-weight:400; color: var(--grey-400); margin-left: 6px; font-size: var(--text-xs);">(optional)</span>
+              </label>
+              <input
+                class="form-input"
+                type="text"
+                id="address"
+                name="address"
+                placeholder="e.g. 12 Park Street, Kolkata"
+                autocomplete="street-address"
+              />
+            </div>
+          </div>
+
+          <!-- Section 2: Files -->
+          <div class="form-section">
+            <div class="form-section-title title-with-count">
+              2 — Files to print
+              <span class="file-count-badge" id="file-count" style="display:none;">0</span>
+            </div>
+
+            <!-- Drop zone -->
+            <div class="upload-zone" id="upload-zone">
+              <input
+                type="file"
+                id="file-input"
+                name="files"
+                multiple
+                accept=".dwg,.pdf,.jpg,.jpeg,.png"
+                aria-label="Select files to upload"
+              />
+              <div class="upload-icon" aria-hidden="true">
+                <i class="bi bi-file-earmark-text"></i>
+              </div>
+              <h3>Tap to select files</h3>
+              <p>or drag and drop here</p>
+              <div class="file-types">
+                <span class="file-type-chip">PDF</span>
+                <span class="file-type-chip">DWG</span>
+                <span class="file-type-chip">JPG</span>
+                <span class="file-type-chip">PNG</span>
+              </div>
+            </div>
+
+            <!-- Per-file list -->
+            <div class="file-list" id="file-list" aria-label="Selected files"></div>
+            <div class="file-empty-state" id="file-empty-state">
+              No files selected yet. Use the area above to add files.
+            </div>
+          </div>
+
+          <!-- Section 3: Upload progress (shown during submit) -->
+          <div class="upload-progress-overlay" id="progress-view">
+            <div class="big-spinner"></div>
+            <p>Uploading your order…</p>
+            <p style="font-size: var(--text-sm); color: var(--grey-400);">Please wait, this may take a moment.</p>
+          </div>
+
+          <!-- Footer -->
+          <div class="form-footer">
+            <p style="font-size: var(--text-sm); color: var(--grey-500); flex: 1;">
+              Payment &amp; pricing handled at the counter.
+            </p>
+            <button type="submit" class="btn btn-primary submit-btn" id="submit-btn" disabled>
+              Submit Order
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+
+    <!-- ── Confirmation view ───────────────────────────── -->
+    <div class="form-card" id="confirmation-view">
+      <div style="padding: var(--sp-16) var(--sp-8); text-align: center;" class="animate-scaleIn">
+        <div class="success-icon" aria-hidden="true">
+          <i class="bi bi-check-circle-fill"></i>
+        </div>
+
+        <h2>Order submitted</h2>
+        <p>Your files have been sent to the print desk.</p>
+
+        <div class="token-card animate-fadeInUp">
+          <span class="token-label">Your queue number</span>
+          <span class="token-number" id="token-display">—</span>
+        </div>
+
+        <p class="confirmation-message">
+          Quote this number at the counter. Staff will call you when your job is ready.
+        </p>
+
+        <button class="btn btn-primary btn-lg" id="new-order-btn">
+          Place another order
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="/js/customer.js"></script>
+</body>
+</html>

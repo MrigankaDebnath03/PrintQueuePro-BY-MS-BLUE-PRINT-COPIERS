@@ -1,0 +1,24 @@
+{
+  "name": "printqueuepro",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-17",
+
+  // Static assets (customer + admin HTML/CSS/JS)
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+
+  // R2 bucket binding — "BUCKET" is available as env.BUCKET in the Worker
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "printqueuepro"
+    }
+  ],
+
+  // Cron trigger: daily cleanup at 03:00 UTC
+  "triggers": {
+    "crons": ["0 3 * * *"]
+  }
+}

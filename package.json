@@ -1,0 +1,15 @@
+{
+  "name": "printqueuepro",
+  "version": "1.0.0",
+  "description": "In-shop print/copy ordering system by Blue Print Copiers",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "dev:remote": "wrangler dev --remote",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4.133.0"
+  }
+}
