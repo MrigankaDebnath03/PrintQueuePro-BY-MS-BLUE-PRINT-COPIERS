@@ -11,11 +11,11 @@
   --color-stamp: #C1442D;
   --color-border: #D9E3ED;
   --color-surface: rgba(255, 255, 255, 0.6);
-  --color-surface-card: rgba(255, 255, 255, 0.3);
+  --color-surface-card: rgba(255, 255, 255, 1.0);
   --color-surface-row: rgba(255, 255, 255, 0.35);
   --color-surface-input: rgba(232, 238, 245, 0.8);
   --color-surface-topbar: rgba(255, 255, 255, 0.7);
-  --color-surface-footer: rgba(255, 255, 255, 0.15);
+  --color-surface-footer: #FFFFFF;
   --color-surface-upload: rgba(255, 255, 255, 0.1);
   --color-text-muted: rgba(31, 36, 48, 0.7);
   --color-text-label: rgba(31, 36, 48, 0.8);
@@ -81,23 +81,25 @@ body {
 }
 
 .topbar-name {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-primary);
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   font-family: var(--font-heading);
-}
-
-.topbar-tagline {
-  font-size: 0.68rem;
-  color: var(--color-text-muted);
-  font-weight: 500;
 }
 
 .page-main {
   max-width: 620px;
   margin: 0 auto;
   padding: 2rem 1rem 5rem;
+}
+
+.customer-layout {
+  display: block;
+}
+
+.order-pane {
+  min-width: 0;
 }
 
 .page-header {
@@ -474,11 +476,80 @@ body {
   z-index: 5;
 }
 
+.location-panel {
+  margin-top: 1.5rem;
+}
+
+.location-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--color-surface-card);
+}
+
+.location-heading {
+  padding: 1.25rem 1.25rem 1rem;
+  font-size: 0.95rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.location-map {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 0;
+}
+
+.directions-link {
+  display: inline-block;
+  margin: 0.85rem 1.25rem 1.15rem;
+  color: var(--color-primary);
+  font-size: 0.88rem;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.directions-link:focus-visible,
+.whatsapp-contact:focus-visible {
+  outline: 3px solid var(--color-tint);
+  outline-offset: 3px;
+}
+
+.whatsapp-contact {
+  position: fixed;
+  right: 1rem;
+  bottom: 4.5rem;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 1.35rem;
+  box-shadow: none;
+}
+
+.whatsapp-contact:hover {
+  background: #163b68;
+}
+
 .form-footer p {
   font-size: 0.82rem;
   color: var(--color-text-muted);
+  min-width: 0;
+}
+
+.form-footer-details {
   flex: 1;
   min-width: 0;
+}
+
+.form-footer-details p + p {
+  margin-top: 0.2rem;
 }
 
 .submit-btn {
@@ -637,6 +708,74 @@ body {
     grid-column: 2;
     grid-row: 1;
     justify-self: end;
+  }
+}
+
+@media (max-width: 1023px) {
+  .whatsapp-contact {
+    right: 1rem;
+    bottom: calc(8.5rem + env(safe-area-inset-bottom));
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-main {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .customer-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .order-pane {
+    width: min(620px, 100%);
+    max-height: 100vh;
+    overflow-y: auto;
+    margin: 0 auto;
+    padding: 2rem 1rem 5rem;
+  }
+
+  .location-panel {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .location-card {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .location-heading {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 1;
+    padding: 0;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+
+  .location-map {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .directions-link {
+    position: absolute;
+    left: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 1;
+    margin: 0;
+    color: var(--color-primary);
+    text-shadow: none;
   }
 }
 

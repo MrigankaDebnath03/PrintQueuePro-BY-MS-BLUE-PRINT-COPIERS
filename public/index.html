@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PrintQueuePro — Place a Print Order | Blue Print Copiers</title>
+  <title>M/S BLUE PRINT COPIERS — Place a Print Order</title>
   <meta name="description" content="Submit your print or copy order at Blue Print Copiers. Upload your files and set sizes and quantities — your job is queued instantly." />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <link rel="stylesheet" href="/css/main.css" />
@@ -25,8 +25,7 @@
         <line x1="9" y1="15" x2="21" y2="15" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
       </svg>
       <div class="topbar-brand">
-        <span class="topbar-name">PrintQueuePro</span>
-        <span class="topbar-tagline">Blue Print Copiers</span>
+        <span class="topbar-name">M/S BLUE PRINT COPIERS</span>
       </div>
     </div>
     <div style="margin-left: auto;">
@@ -36,20 +35,22 @@
 
   <!-- ── Main ───────────────────────────────────────────── -->
   <main class="page-main">
+    <div class="customer-layout">
+      <div class="order-pane">
 
-    <!-- Page header -->
-    <div class="page-header animate-fadeInUp">
-      <h1>Place your print order</h1>
-      <p>Fill in the form below — staff will prepare your job right away.</p>
-    </div>
+        <!-- Page header -->
+        <div class="page-header animate-fadeInUp">
+          <h1>Place your print order</h1>
+          <p>Fill in the form below — staff will prepare your job right away.</p>
+        </div>
 
-    <!-- Error banner -->
-    <div class="error-banner" id="error-banner" role="alert"></div>
+        <!-- Error banner -->
+        <div class="error-banner" id="error-banner" role="alert"></div>
 
-    <!-- ── Form view ──────────────────────────────────── -->
-    <div id="form-view">
-      <form id="order-form" novalidate>
-        <div class="form-card stagger">
+        <!-- ── Form view ──────────────────────────────────── -->
+        <div id="form-view">
+          <form id="order-form" novalidate>
+            <div class="form-card stagger">
 
           <!-- Section 1: Customer details -->
           <div class="form-section">
@@ -95,7 +96,7 @@
                 type="text"
                 id="address"
                 name="address"
-                placeholder="e.g. 12 Park Street, Kolkata"
+                placeholder="e.g. Karnajora, Raiganj"
                 autocomplete="street-address"
               />
             </div>
@@ -138,53 +139,74 @@
             </div>
           </div>
 
-          <!-- Section 3: Upload progress (shown during submit) -->
-          <div class="upload-progress-overlay" id="progress-view">
-            <div class="big-spinner"></div>
-            <p>Uploading your order…</p>
-            <p style="font-size: var(--text-sm); color: var(--grey-400);">Please wait, this may take a moment.</p>
-          </div>
+              <!-- Section 3: Upload progress (shown during submit) -->
+              <div class="upload-progress-overlay" id="progress-view">
+                <div class="big-spinner"></div>
+                <p>Uploading your order…</p>
+                <p style="font-size: var(--text-sm); color: var(--grey-400);">Please wait, this may take a moment.</p>
+              </div>
 
-          <!-- Footer -->
-          <div class="form-footer">
-            <p style="font-size: var(--text-sm); color: var(--grey-500); flex: 1;">
-              Payment &amp; pricing handled at the counter.
+              <!-- Footer -->
+              <div class="form-footer">
+                <div class="form-footer-details">
+                  <p>Payment &amp; pricing handled at the counter.</p>
+                  <p>Phone/Whatsapp: 92391 35117</p>
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn" id="submit-btn" disabled>
+                  Submit Order
+                </button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+
+        <!-- ── Confirmation view ───────────────────────────── -->
+        <div class="form-card" id="confirmation-view">
+          <div style="padding: var(--sp-16) var(--sp-8); text-align: center;" class="animate-scaleIn">
+            <div class="success-icon" aria-hidden="true">
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
+
+            <h2>Order submitted</h2>
+            <p>Your files have been sent to the print desk.</p>
+
+            <div class="token-card animate-fadeInUp">
+              <span class="token-label">Your queue number</span>
+              <span class="token-number" id="token-display">—</span>
+            </div>
+
+            <p class="confirmation-message">
+              Quote this number at the counter. Staff will call you when your job is ready.
             </p>
-            <button type="submit" class="btn btn-primary submit-btn" id="submit-btn" disabled>
-              Submit Order
+
+            <button class="btn btn-primary btn-lg" id="new-order-btn">
+              Place another order
             </button>
           </div>
-
         </div>
-      </form>
-    </div>
-
-    <!-- ── Confirmation view ───────────────────────────── -->
-    <div class="form-card" id="confirmation-view">
-      <div style="padding: var(--sp-16) var(--sp-8); text-align: center;" class="animate-scaleIn">
-        <div class="success-icon" aria-hidden="true">
-          <i class="bi bi-check-circle-fill"></i>
-        </div>
-
-        <h2>Order submitted</h2>
-        <p>Your files have been sent to the print desk.</p>
-
-        <div class="token-card animate-fadeInUp">
-          <span class="token-label">Your queue number</span>
-          <span class="token-number" id="token-display">—</span>
-        </div>
-
-        <p class="confirmation-message">
-          Quote this number at the counter. Staff will call you when your job is ready.
-        </p>
-
-        <button class="btn btn-primary btn-lg" id="new-order-btn">
-          Place another order
-        </button>
       </div>
+
+      <aside class="location-panel" aria-labelledby="location-title">
+        <div class="location-card">
+          <div class="location-heading" id="location-title">Find us</div>
+          <iframe
+            class="location-map"
+            title="Map showing M/S Blue Print Copiers"
+            src="https://www.google.com/maps?q=M/S+Blue+Print+Copiers&ll=25.6263189,88.1294379&z=18&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <a class="directions-link" href="https://maps.app.goo.gl/jD2XqG3CyLZXGVw59" target="_blank" rel="noopener noreferrer">Get directions</a>
+        </div>
+      </aside>
     </div>
 
   </main>
+
+  <a class="whatsapp-contact" href="https://wa.me/919239135117" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp" title="Contact us on WhatsApp">
+    <i class="bi bi-whatsapp" aria-hidden="true"></i>
+  </a>
 
   <script src="/js/customer.js"></script>
 </body>
